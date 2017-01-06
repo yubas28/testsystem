@@ -25,5 +25,9 @@ config TIMER_TEST
 config MPU_TEST
 	bool "MPU Test"
 	depends on MPU9250
-	default n 
+	default n
+config PWMSS_TIMER_TEST
+	bool "PWMSS Timer Test"
+	depends on TIMER
+	default n
 endmenu
