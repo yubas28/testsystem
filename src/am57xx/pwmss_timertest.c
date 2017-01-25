@@ -7,27 +7,27 @@
 #include <stdio.h>
 
 
-
-bool timer_callback(struct timer* timer, void *data) {
+bool pwmss_timer_callback(struct timer* timer, void *data) {
   int32_t ret;
+  printf("my pins togglinn\n");
   ret = gpioPin_togglePin((struct gpio_pin*) data);
   CONFIG_ASSERT(ret >= 0);
   return false;
 }
 
-void timertest_task(void *data) {
-	uint64_t us[3];
+void pwmss_timertest_task(void *data) {
+	uint64_t us;
 	struct timer **timer = data;
 	TickType_t lastWakeUpTime = xTaskGetTickCount();
 	for (;;) {
-		us[0] = timer_getTime(timer[0]);
-		printf("%lu: Time of Timer: %llu us\n", lastWakeUpTime, us[0]);
+		us = timer_getTime(timer[0]);
+		printf("%lu: Time of Timer: %llu us\n", lastWakeUpTime, us);
 
 		vTaskDelayUntil(&lastWakeUpTime, 1000 / portTICK_PERIOD_MS);
 	}
 }
 
-void timertest_init() {
+void pwmss_timertest_init() {
   int32_t ret;
   struct gpio *gpio;
   struct gpio_pin *pin;
@@ -39,7 +39,11 @@ void timertest_init() {
   CONFIG_ASSERT(gpio != NULL);
   pin = gpioPin_init(gpio, PAD_VIN1A_D3, GPIO_INPUT, GPIO_OPEN);
   CONFIG_ASSERT(pin != NULL);
-  ret = timer_setOverflowCallback(timer[0], timer_callback, pin);
+  printf("Timer start\n");
+  ret = timer_periodic(timer[0], 10000);
+  CONFIG_ASSERT(ret >= 0);
+  ret = timer_setOverflowCallback(timer[0], pwmss_timer_callback, pin);
 	CONFIG_ASSERT(ret >= 0);
-  xTaskCreate(timertest_task, "Timer test task", 786, timer, 1, NULL);
+
+  xTaskCreate(pwmss_timertest_task, "Timer test task", 786, timer, 1, NULL);
 }
