@@ -10,7 +10,6 @@
 
 bool pwmss_timer_callback(struct timer* timer, void *data) {
   int32_t ret;
-  printf("my pins togglinn\n");
   ret = gpioPin_togglePin((struct gpio_pin*) data);
   CONFIG_ASSERT(ret >= 0);
   return false;
