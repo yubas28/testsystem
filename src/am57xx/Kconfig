@@ -29,5 +29,13 @@ config MPU_TEST
 config PWMSS_TIMER_TEST
 	bool "PWMSS Timer Test"
 	depends on TIMER
+	default n 
+config RTC_SOFTWARE_TEST
+	bool "RTC Software Test"
+	depends on RTC_SOFTWARE
+	default n
+config SOFTWARE_CAPTURE_TEST
+	bool "Software Capture Test"
+	depends on CAPTURE_SOFTWARE
 	default n
 endmenu
