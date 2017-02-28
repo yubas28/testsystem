@@ -7,3 +7,4 @@ obj-$(CONFIG_SPI_TEST) += spitest.o
 obj-$(CONFIG_TIMER_TEST) += timertest.o
 obj-$(CONFIG_MPU_TEST) += mputest.o
 obj-$(CONFIG_PWMSS_TIMER_TEST) += pwmss_timertest.o
+obj-$(CONFIG_PWMSS_TIMER_TEST) += softwarePwm.o

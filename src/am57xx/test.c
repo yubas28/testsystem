@@ -43,6 +43,8 @@
 #include <timertest.h>
 #include <mputest.h>
 #include <pwmss_timertest.h>
+#include <softwarePwm.h>
+
 #if defined(CONFIG_NEWLIB_UART) || defined(CONFIG_NLIBC_PRINTF)
 # define PRINTF(...) printf(__VA_ARGS__)
 #else
@@ -194,6 +196,9 @@ int main() {
 #endif
 #ifdef CONFIG_PWMSS_TIMER_TEST
 	pwmss_timertest_init();
+#ifdef CONFIG_AM57xx_PWMSS_CAPTURE
+	pwm_togglePin_init();
+#endif
 #endif
 	PRINTF("Start Scheduler\n");
 	vTaskStartScheduler();
