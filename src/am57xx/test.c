@@ -198,6 +198,7 @@ int main() {
 #endif
 #ifdef CONFIG_PWMSS_TIMER_TEST
 	pwmss_timertest_init();
+#endif
 #ifdef CONFIG_AM57xx_PWMSS_CAPTURE
 	pwm_togglePin_init();
 #endif
